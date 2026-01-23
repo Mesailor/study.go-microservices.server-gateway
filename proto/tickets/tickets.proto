@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package tickets;
+
+option go_package = "github.com/Mesailor/study.go-microservices.server-core/proto/ticketspb";
+
+service TicketService {
+  rpc CreateTicket (CreateTicketRequest) returns (Ticket);
+  rpc GetTicket    (GetTicketRequest)    returns (Ticket);
+  rpc ListTickets  (ListTicketsRequest)  returns (ListTicketsResponse);
+  rpc UpdateTicket (UpdateTicketRequest) returns (Ticket);
+  rpc DeleteTicket (DeleteTicketRequest) returns (DeleteTicketResponse);
+}
+
+message Ticket {
+  string id = 1;
+  string subject = 2;
+  string description = 3;
+  string status = 4; // "open", "in-progress", "resolved", "closed"
+  string priority = 5; // "low", "medium", "high", "urgent"
+  string created_at = 6;
+  string updated_at = 7;
+  string assigned_to = 8;
+}
+
+message CreateTicketRequest {
+  string subject = 1;
+  string description = 2;
+}
+
+message GetTicketRequest {
+  string id = 1;
+}
+
+message ListTicketsRequest {}
+
+message ListTicketsResponse {
+  repeated Ticket tickets = 1;
+}
+
+message UpdateTicketRequest {
+  string id = 1;
+  string subject = 2;
+  string description = 3;
+}
+
+message DeleteTicketRequest {
+  string id = 1;
+}
+
+message DeleteTicketResponse {
+  bool success = 1;
+}
